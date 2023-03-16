@@ -5,7 +5,7 @@ const router = express.Router();
 const app = express();
 const Inventory = require("./inventorySchema.jsx");
 const mongoose = require("mongoose");
-
+// api calls can be done at http://localhost:3000/add
 const mongoURI =
   "mongodb+srv://ravichandrapalla199:RM3ujqehrZU55mnc@cluster0.xwczseb.mongodb.net/buyumetask";
 
