@@ -28,12 +28,17 @@ router.post("/add", async (req, res) => {
   const { payload } = req.body;
 
   try {
-    if (inventory) {
-      const updatedQuantity = inventory.quantity + quantity;
-      await Inventory.updateOne({ productId }, { quantity: updatedQuantity });
-    } else {
-      const newInventory = new Inventory({ productId, quantity });
-      await newInventory.save();
+    for (const item of payload) {
+      const { productId, quantity } = item;
+      const inventory = await Inventory.findOne({ productId });
+
+      if (inventory) {
+        const updatedQuantity = inventory.quantity + quantity;
+        await Inventory.updateOne({ productId }, { quantity: updatedQuantity });
+      } else {
+        const newInventory = new Inventory({ productId, quantity });
+        await newInventory.save();
+      }
     }
 
     res.status(200).send({ message: "Product quantity added successfully" });
